@@ -6,6 +6,7 @@ jobs:
     environment: dev
     name: Abd Test Liquibase Action
     steps:
+      name: update section
       - uses: actions/checkout@v2
       - uses: liquibase/liquibase-github-action@v2
         with:
@@ -16,6 +17,10 @@ jobs:
           password: ${{ secrets.PASS }}
           url: ${{ secrets.URL }}
           logLevel: DEBUG
+    steps:
+      name: history section
+    - uses: actions/checkout@v2
+    - uses: liquibase/liquibase-github-action@v2
       with:
       operation: 'history'
       classpath: 'example/changelogs'
