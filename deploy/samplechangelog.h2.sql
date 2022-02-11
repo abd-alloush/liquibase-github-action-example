@@ -27,6 +27,13 @@ CREATE TABLE testtable (
     name varchar(50) not null
 )
 
+--changeset abd-alloush:7
+--rollback DROP TABLE yourname;
+CREATE TABLE testtable12 (
+    id int primary key,
+    name varchar(50) not null
+)
+
 --changeset other.dev:4
 --rollback ALTER TABLE person DROP COLUMN country;
 alter table person add column country varchar(2)
