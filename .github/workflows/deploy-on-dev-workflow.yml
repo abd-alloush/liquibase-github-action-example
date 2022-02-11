@@ -16,7 +16,6 @@ jobs:
           password: ${{ secrets.PASS }}
           url: ${{ secrets.URL }}
           logLevel: DEBUG
-    steps:
       with:
       operation: 'history'
       classpath: 'example/changelogs'
