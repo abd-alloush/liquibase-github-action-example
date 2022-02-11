@@ -12,7 +12,6 @@ jobs:
           operation: 'update'
           classpath: 'example/changelogs'
           changeLogFile: 'masterfile.xml'
-          env: 
-            username: ${{ secrets.USER }}
-            password: ${{ secrets.PASS }}
-            url: ${{ secrets.URL }}
+          Username: ${{ secrets.USER }}
+          password: ${{ secrets.PASS }}
+          url: ${{ secrets.URL }}
