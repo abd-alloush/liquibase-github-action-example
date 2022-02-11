@@ -15,3 +15,15 @@ jobs:
           Username: ${{ secrets.USER }}
           password: ${{ secrets.PASS }}
           url: ${{ secrets.URL }}
+          logLevel: DEBUG
+    steps:
+    - uses: actions/checkout@v2
+    - uses: liquibase/liquibase-github-action@v1
+      with:
+      operation: 'history'
+      classpath: 'example/changelogs'
+          changeLogFile: 'masterfile.xml'
+          Username: ${{ secrets.USER }}
+          password: ${{ secrets.PASS }}
+          url: ${{ secrets.URL }}
+          logLevel: DEBUG
