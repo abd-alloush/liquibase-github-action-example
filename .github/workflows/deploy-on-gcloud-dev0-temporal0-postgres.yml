@@ -1,0 +1,15 @@
+on: [push]
+
+jobs:
+  job_id:
+    steps:
+    - id: 'auth'
+      uses: 'google-github-actions/auth@v0'
+      with:
+        credentials_json: '${{ secrets.gcp_credentials }}'
+
+    - id: 'get-credentials'
+      uses: 'google-github-actions/get-gke-credentials@v0'
+      with:
+        cluster_name: 'my-cluster'
+        location: 'us-central1-a'
