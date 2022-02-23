@@ -25,7 +25,9 @@ jobs:
     # The KUBECONFIG create pod by kubectl.
     - id: 'get-pods'
       #run: 'kubectl get pods;kubectl get nodes;'
-      run: 'kubectl run ubuntu-liquibase-psql --image=ubuntu -- bash;sudo apt-get install postgresql-12;'
+      run: 'kubectl run ubuntu-liquibase-psql --image=ubuntu -- bash;sudo apt-get install postgresql-12;kubectl exec ubuntu-liquibase-psql -- /bin/bash;'
+
+    - name: 'Liquibase Update Action'
       uses: 'liquibase/liquibase-github-action@v2'
       with:
         operation: 'update'
