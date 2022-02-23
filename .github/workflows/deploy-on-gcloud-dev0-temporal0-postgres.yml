@@ -19,4 +19,11 @@ jobs:
         cluster_name: 'uc1-dev0'
         location: 'us-central1'
 
-
+      - uses: 'liquibase/liquibase-github-action@v2'
+        with:
+          operation: 'update'
+          classpath: 'example/changelogs'
+          changeLogFile: 'masterfile.xml'
+          Username: ${{ secrets.USER }}
+          password: ${{ secrets.PASS }}
+          url: ${{ secrets.URL }}
