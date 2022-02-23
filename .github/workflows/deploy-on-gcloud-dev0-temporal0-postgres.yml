@@ -7,7 +7,21 @@ jobs:
     name: Connect to gcloud VM Cluster using Service Account
     steps:
     - uses: 'actions/checkout@v2'
-    - uses: 'liquibase/liquibase-github-action@v2'
+
+    - id: 'auth'
+      uses: 'google-github-actions/auth@v0'
+      with:
+        credentials_json: '${{ secrets.gcp_credentials }}'
+
+    - id: 'get-credentials'
+      uses: 'google-github-actions/get-gke-credentials@v0'
+      with:
+        cluster_name: 'uc1-dev0'
+        location: 'us-central1'
+
+    - id: 'Liquibase Update Action'
+      - uses: actions/checkout@v2
+      - uses: liquibase/liquibase-github-action@v2
         with:
           operation: 'update'
           classpath: 'example/changelogs'
