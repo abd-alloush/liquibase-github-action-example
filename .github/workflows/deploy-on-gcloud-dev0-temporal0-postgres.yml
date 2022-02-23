@@ -5,6 +5,10 @@ jobs:
     runs-on: ubuntu-latest
     environment: gcloud-dev0-temporal0-postgres
     name: Connect to gcloud VM Cluster using Service Account
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+
     steps:
     - uses: 'actions/checkout@v2'
 
@@ -18,12 +22,3 @@ jobs:
       with:
         cluster_name: 'uc1-dev0'
         location: 'us-central1'
-
-      uses: 'liquibase/liquibase-github-action@v2'
-        with:
-          operation: 'update'
-          classpath: 'example/changelogs'
-          changeLogFile: 'masterfile.xml'
-          Username: ${{ secrets.USER }}
-          password: ${{ secrets.PASS }}
-          url: ${{ secrets.URL }}
