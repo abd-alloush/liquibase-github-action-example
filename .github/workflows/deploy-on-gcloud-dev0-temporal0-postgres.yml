@@ -24,8 +24,7 @@ jobs:
 
     # The KUBECONFIG create pod by kubectl.
     - id: 'get-pods'
-      run: 'kubectl get pods'
-      run: 'kubectl get nodes'
+      run: 'kubectl get pods;kubectl get nodes;'
 
     - name: 'Liquibase Update Action'
       uses: 'liquibase/liquibase-github-action@v2'
