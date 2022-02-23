@@ -18,3 +18,9 @@ jobs:
       with:
         cluster_name: 'uc1-dev0'
         location: 'us-central1'
+
+    - id: 'get-credentials'
+      uses: 'google-github-actions/get-gke-credentials@v0'
+      with:
+        cluster_name: 'uc1-dev0'
+        location: 'us-central1'
