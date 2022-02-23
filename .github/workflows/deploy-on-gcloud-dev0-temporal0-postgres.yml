@@ -19,8 +19,7 @@ jobs:
         cluster_name: 'uc1-dev0'
         location: 'us-central1'
 
-    - id: 'Liquibase Update Action'
-      uses: 'liquibase/liquibase-github-action@v2'
+    - uses: 'liquibase/liquibase-github-action@v2'
         with:
           operation: 'update'
           classpath: 'example/changelogs'
