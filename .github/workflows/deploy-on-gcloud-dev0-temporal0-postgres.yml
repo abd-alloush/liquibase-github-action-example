@@ -22,6 +22,11 @@ jobs:
         cluster_name: 'uc1-dev0'
         location: 'us-central1'
 
+    # The KUBECONFIG create pod by kubectl.
+    - id: 'get-pods'
+      run: 'kubectl get pods'
+      run: 'kubectl get nodes'
+
     - name: 'Liquibase Update Action'
       uses: 'liquibase/liquibase-github-action@v2'
       with:
@@ -30,4 +35,4 @@ jobs:
         changeLogFile: 'masterfile.xml'
         Username: ${{ secrets.USERNAME }}
         password: ${{ secrets.PASSWORD }}
-        url: ${{ secrets.CONN_URL }}
+        url: ${{ secrets.URL }}
