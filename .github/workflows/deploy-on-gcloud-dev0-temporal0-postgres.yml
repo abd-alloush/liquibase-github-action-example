@@ -30,4 +30,4 @@ jobs:
         changeLogFile: 'masterfile.xml'
         Username: ${{ secrets.USERNAME }}
         password: ${{ secrets.PASSWORD }}
-        url: ${{ secrets.URL }}
+        url: ${{ secrets.CONN_URL }}
