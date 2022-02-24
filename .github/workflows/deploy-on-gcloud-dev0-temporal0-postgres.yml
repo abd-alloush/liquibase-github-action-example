@@ -26,4 +26,4 @@ jobs:
     - id: 'get-pods'
       #run: 'kubectl get pods;kubectl get nodes;'
       #run: 'kubectl get pods;kubectl delete pod ubuntu-liquibase-psql; kubectl run ubuntu-liquibase-psql --image=ubuntu -- bash;sudo apt-get install postgresql-12;kubectl exec -it ubuntu-liquibase-psql -- bash -c "ls /";psql "sslmode=disable dbname=postgres user=abd.alloush hostaddr=10.251.1.2";'
-      run: 'kubectl exec -it ubuntu-liquibase-psql -- bash -c "\ls -ltr";'
+      run: 'kubectl run -i ubuntu-liquibase-psql --image=ubuntu;kubectl exec -it ubuntu-liquibase-psql -- bash -c "\ls -ltr";'
