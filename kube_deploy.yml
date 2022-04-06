@@ -1,0 +1,14 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: liquibase-schema-update
+spec:
+  template:
+    spec:
+      containers:
+      - name: liquibase-schema-update
+        image: us.gcr.io/nylas-registry/something:something
+        command: |
+          liquibase run blah blah blah 
+      restartPolicy: Never
+  backoffLimit: 4

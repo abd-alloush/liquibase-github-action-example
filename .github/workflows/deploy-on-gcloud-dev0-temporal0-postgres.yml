@@ -22,18 +22,28 @@ jobs:
         cluster_name: 'uc1-dev0'
         location: 'us-central1'
 
+    # Setup the CLI gcloud Auth
+    - name: Setup gCloud
+      uses: google-github-actions/setup-gcloud@master
+      with:
+        project_id: nylas-registry
+        service_account_key: ${{ secrets.gcp_credentials }}
+        export_default_credentials: true
+
+    - name: Configure Docker
+      run: gcloud auth configure-docker -q
+
+    - name: Build Image
+      run: docker build -t us.gcr.io/nylas-registry/liquibase:$GITHUB_SHA -f Dockerfile .
+
+    - name: Push Image
+      run: docker push us.gcr.io/nylas-registry/liquibase:$GITHUB_SHA
+
+    - name: Update deployment file
+      run: TAG=$(echo $GITHUB_SHA | head -c7) && sed -i 's|<IMAGE>|docker_fake_repo/tutorial-api:'${TAG}'|' $GITHUB_WORKSPACE/kube_deploy.yml
+
     # The KUBECONFIG create pod by kubectl.
     - id: 'get-pods'
-      #run: 'kubectl get pods;kubectl get nodes;'
       #run: 'kubectl get pods;kubectl delete pod ubuntu-liquibase-psql; kubectl run ubuntu-liquibase-psql --image=ubuntu -- bash;sudo apt-get install postgresql-12;kubectl exec -it ubuntu-liquibase-psql -- bash -c "ls /";psql "sslmode=disable dbname=postgres user=abd.alloush hostaddr=10.251.1.2";'
       run: 'kubectl delete pod ubuntu-liquibase-psql; kubectl run -i ubuntu-liquibase-psql --image=ubuntu;kubectl exec -it ubuntu-liquibase-psql -- bash -c "\ls -ltr";'
 
-    - name: 'Liquibase Update Action'
-      uses: 'liquibase/liquibase-github-action@v2'
-      with:
-        operation: 'update'
-        classpath: 'example/changelogs'
-        changeLogFile: 'masterfile.xml'
-        Username: ${{ secrets.USERNAME }}
-        password: ${{ secrets.PASSWORD }}
-        url: ${{ secrets.CONN_URL }}
