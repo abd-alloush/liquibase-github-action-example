@@ -9,7 +9,7 @@ jobs:
       contents: 'read'
       id-token: 'write'
     steps:
-    - uses: 'actions/checkout@master'
+    - uses: 'actions/checkout@v2'
 
     - id: 'auth'
       uses: 'google-github-actions/auth@v0'
@@ -24,7 +24,7 @@ jobs:
 
     # Setup the CLI gcloud Auth
     - name: Setup gCloud
-      uses: google-github-actions/setup-gcloud@master
+      uses: google-github-actions/setup-gcloud@v0
       with:
         project_id: nylas-registry
         service_account_key: ${{ secrets.gcp_credentials }}
@@ -44,6 +44,7 @@ jobs:
 
     # The KUBECONFIG create pod by kubectl.
     - id: 'get-pods'
+      #run: 'kubectl get pods;kubectl get nodes;'
       #run: 'kubectl get pods;kubectl delete pod ubuntu-liquibase-psql; kubectl run ubuntu-liquibase-psql --image=ubuntu -- bash;sudo apt-get install postgresql-12;kubectl exec -it ubuntu-liquibase-psql -- bash -c "ls /";psql "sslmode=disable dbname=postgres user=abd.alloush hostaddr=10.251.1.2";'
       run: 'kubectl delete pod ubuntu-liquibase-psql; kubectl run -i ubuntu-liquibase-psql --image=ubuntu;kubectl exec -it ubuntu-liquibase-psql -- bash -c "\ls -ltr";'
 
