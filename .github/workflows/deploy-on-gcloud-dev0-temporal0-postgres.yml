@@ -11,13 +11,11 @@ jobs:
     steps:
     - uses: 'actions/checkout@v2'
 
-    - name: Set up Cloud SDK
-      uses: google-github-actions/setup-gcloud@v0
+    - id: 'auth-nylas-registry'
+      uses: 'google-github-actions/setup-gcloud@v0'
       with:
-        project_id: nylas-registry
-        service_account_key: ${{ secrets.NYLAS_REGISTRY_CREDENTIALS }}
-        export_default_credentials: true
-    
+        credentials_json: '${{ secrets.NYLAS_REGISTRY_CREDENTIALS }}'
+
     - name: Configure Docker
       run: gcloud auth configure-docker -q
 
@@ -37,7 +35,7 @@ jobs:
       with:
         cluster_name: 'uc1-dev0'
         location: 'us-central1'
-        
+
     # The KUBECONFIG create pod by kubectl.
     - id: 'get-pods'
       #run: 'kubectl get pods;kubectl get nodes;'
