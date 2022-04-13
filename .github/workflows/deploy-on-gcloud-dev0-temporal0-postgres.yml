@@ -22,7 +22,7 @@ jobs:
         cluster_name: 'uc1-dev0'
         location: 'us-central1'
 
-    - id: 'auth'
+    - id: 'auth-nylas-registry'
       uses: 'google-github-actions/setup-gcloud@v0'
       with:
         credentials_json: '${{ secrets.nylas_registry_credentials }}'
