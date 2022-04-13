@@ -36,5 +36,9 @@ jobs:
         cluster_name: 'uc1-dev0'
         location: 'us-central1'
 
+    - id: 'get-pods'
+      run: 'kubectl get pods;'
+
     - id: 'liquiqbase-job'
-      run: kubectl apply -f helm/liquibase_file_docker.yml
+      #run: kubectl apply -f helm/liquibase_file_docker.yml
+      run: kubectl apply -f helm/liquibase_kube_file.yml

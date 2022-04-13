@@ -8,6 +8,11 @@ spec:
       containers:
       - name: liquibase-schema-change
         image: us.gcr.io/nylas-registry/liquibase:latest
-        command: ["liquibase status",  "liquibase version"]
+        command:
+          - /bin/sh
+          - -c
+          - |
+            echo "running below command";
+            liquibase status;
       restartPolicy: Never
   backoffLimit: 4
