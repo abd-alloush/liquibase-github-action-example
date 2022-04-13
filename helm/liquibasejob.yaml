@@ -1,13 +1,13 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: pi
+  name: liquibase-schema-change
 spec:
   template:
     spec:
       containers:
-      - name: pi
-        image: perl
-        command: ["perl",  "-Mbignum=bpi", "-wle", "print bpi(2000)"]
+      - name: liquibase-schema-change
+        image: us.gcr.io/nylas-registry/liquibase:latest
+        command: ["liquibase status",  "liquibase version"]
       restartPolicy: Never
   backoffLimit: 4
