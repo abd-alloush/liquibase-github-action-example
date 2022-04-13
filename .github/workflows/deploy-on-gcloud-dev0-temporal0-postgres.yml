@@ -12,7 +12,7 @@ jobs:
     - uses: 'actions/checkout@v2'
 
     - id: 'auth-nylas-registry'
-      uses: 'google-github-actions/setup-gcloud@v0'
+      uses: 'google-github-actions/auth@v0'
       with:
         credentials_json: '${{ secrets.NYLAS_REGISTRY_CREDENTIALS }}'
 
