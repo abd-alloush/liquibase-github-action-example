@@ -27,6 +27,17 @@ jobs:
     - name: Push Image
       run: docker push us.gcr.io/nylas-registry/liquibase:$GITHUB_SHA
 
+    - id: 'auth'
+      uses: 'google-github-actions/auth@v0'
+      with:
+        credentials_json: '${{ secrets.gcp_credentials }}'
+
+    - id: 'get-credentials'
+      uses: 'google-github-actions/get-gke-credentials@v0'
+      with:
+        cluster_name: 'uc1-dev0'
+        location: 'us-central1'
+        
     # The KUBECONFIG create pod by kubectl.
     - id: 'get-pods'
       #run: 'kubectl get pods;kubectl get nodes;'
