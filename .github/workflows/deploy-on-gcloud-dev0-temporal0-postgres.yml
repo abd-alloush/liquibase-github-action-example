@@ -1,0 +1,44 @@
+on: [push]
+
+jobs:
+  job_id:
+    runs-on: ubuntu-latest
+    environment: gcloud-dev0-temporal0-postgres
+    name: Connect to gcloud VM Cluster using Service Account
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+    steps:
+    - uses: 'actions/checkout@v2'
+
+    - id: 'auth-nylas-registry'
+      uses: 'google-github-actions/auth@v0'
+      with:
+        credentials_json: '${{ secrets.NYLAS_REGISTRY_CREDENTIALS }}'
+
+    - name: Configure Docker
+      run: gcloud auth configure-docker -q
+
+    - name: Build Image
+      run: docker build -t us.gcr.io/nylas-registry/liquibase:$GITHUB_SHA -f Dockerfile .
+
+    - name: Push Image
+      run: docker push us.gcr.io/nylas-registry/liquibase:$GITHUB_SHA
+
+    - id: 'auth'
+      uses: 'google-github-actions/auth@v0'
+      with:
+        credentials_json: '${{ secrets.gcp_credentials }}'
+
+    - id: 'get-credentials'
+      uses: 'google-github-actions/get-gke-credentials@v0'
+      with:
+        cluster_name: 'uc1-dev0'
+        location: 'us-central1'
+
+    - id: 'get-pods'
+      run: 'kubectl get pods;'
+
+    - id: 'liquiqbase-job'
+      #run: kubectl apply -f helm/liquibase_file_docker.yml
+      run: kubectl apply -f helm/liquibase_kube_file.yml
