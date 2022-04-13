@@ -11,22 +11,13 @@ jobs:
     steps:
     - uses: 'actions/checkout@v2'
 
-    - id: 'auth'
-      uses: 'google-github-actions/auth@v0'
+    - name: Set up Cloud SDK
+      uses: google-github-actions/setup-gcloud@v0
       with:
-        credentials_json: '${{ secrets.gcp_credentials }}'
-
-    - id: 'get-credentials'
-      uses: 'google-github-actions/get-gke-credentials@v0'
-      with:
-        cluster_name: 'uc1-dev0'
-        location: 'us-central1'
-
-    - id: 'auth-nylas-registry'
-      uses: 'google-github-actions/setup-gcloud@v0'
-      with:
-        credentials_json: '${{ secrets.nylas_registry_credentials }}'
-
+        project_id: nylas-registry
+        service_account_key: ${{ secrets.NYLAS_REGISTRY_CREDENTIALS }}
+        export_default_credentials: true
+    
     - name: Configure Docker
       run: gcloud auth configure-docker -q
 
